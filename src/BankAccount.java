@@ -3,6 +3,7 @@
     Date:       10/08/2022
  */
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,10 +11,10 @@ public class BankAccount {
 
     // region Getters and Setters
     static String name;
-    public static String GetName() { return name; }
+    public String GetName() { return name; }
     public void SetName(String setName) { this.name = setName; }
 
-    public static int pin;
+    public int pin;
     public int GetPin() { return pin; }
     public void SetPin(int setPin ) { this.pin = setPin; }
 
@@ -22,11 +23,11 @@ public class BankAccount {
     public void SetBalance(double setBalance) { this.balance = setBalance; }
 
     static long accountNumber;
-    public static long GetAccountNumber() { return accountNumber; }
+    public long GetAccountNumber() { return accountNumber; }
     public void SetAccountNumber(long number) { this.accountNumber = number; }
 
     static int accountType;
-    public static int GetAccountType() { return accountType; }
+    public int GetAccountType() { return accountType; }
     public void SetAccountType(int accountType) { this.accountType = accountType; }
     // endregion
 
@@ -89,11 +90,13 @@ public class BankAccount {
          return type;
     }
 
-    /** Checks Accounts Maximum Loan Amount Depending on Account Type */
-    public double MaximumLoanAmount() {
+    /**
+     * Checks Accounts Maximum Loan Amount Depending on Account Type
+     */
+    public String MaximumLoanAmount() {
 
         double loanAmount = 0;
-
+        DecimalFormat f = new DecimalFormat("##.00");
         for (int i = 1; i < 4; i++) {
             AccountType account = conversion(i);
 
@@ -109,14 +112,14 @@ public class BankAccount {
                 loanAmount = balance * 0.0;
             }
         }
-        return loanAmount;
+        return f.format(loanAmount);
     }
 
     /** Account Authentication */
     public boolean Auth(BankAccount account) {
 
         Scanner reader = new Scanner(System.in);
-        System.out.print("Please enter pin: ");
+        System.out.print("Enter your Pin (4 digit - no spaces): ");
 
         if (reader.nextInt() == account.GetPin()) {
             return true;
@@ -127,21 +130,21 @@ public class BankAccount {
 
     }
 
-
     /** Deposit Money */
     public static void Deposit(int amount) {
-        double oldBalance = GetBalance();
-        System.out.println("Old Balance: " + oldBalance);
+        System.out.println("-----Account Deposit-----");
         balance += amount;
-        System.out.println("New Balance: " + BankAccount.balance);
     }
 
     /** Withdraw Money */
     public static void Withdraw(double amount) {
-        double oldBalance = GetBalance();
-        System.out.println("Old Balance: " + oldBalance);
-        balance -= amount;
-        System.out.println("New Balance: " + BankAccount.balance);
+        System.out.println("-----Account Withdraw-----");
+
+        if (BankAccount.balance > amount) {
+            balance -= amount;
+        } else {
+            System.out.println("You do not have enough balance to withdraw that amount!");
+        }
     }
 
     /** object to string */
@@ -153,6 +156,7 @@ public class BankAccount {
                 ", balance=" + GetBalance() +
                 ", accountNumber=" + GetAccountNumber() +
                 ", accountType=" + conversion(GetAccountType()) +
+                ", MaximumLoan=" + MaximumLoanAmount() +
                 '}';
     }
 }

@@ -22,46 +22,48 @@ public class BankDriver {
     public static void MainMenu(BankAccount account) {
 
         Scanner reader = new Scanner(System.in);
+        int userInput;
 
-        System.out.println("BANKING MAIN MENU - Select one option");
-        System.out.println("1. Deposit Amount to an account");
-        System.out.println("2. Withdraw an Amount from an account");
-        System.out.println("3. Print Account Details");
-        System.out.println("4. Print All Account Details");
-        System.out.println("5. Print Max Loan Amount Details");
-        System.out.println("6. Exit the app");
+        do {
 
-        switch(reader.nextInt()) {
-            case 1:
-                if (account.Auth(account)) {
-                    System.out.print("Deposit: ");
-                    BankAccount.Deposit(reader.nextInt());
-                    MainMenu(account);
-                } else {
-                    MainMenu(account);
-                }
-                break;
-            case 2:
-                if (account.Auth(account)) {
-                    System.out.print("Withdraw: ");
-                    BankAccount.Withdraw(reader.nextInt());
-                    MainMenu(account);
-                } else {
-                    MainMenu(account);
-                }
-                break;
-            case 3:
-                if (account.Auth(account)) {
-                    System.out.println(account.toString());
-                    MainMenu(account);
-                } else {
-                    MainMenu(account);
-                }
-                break;
-            case 4:
+            System.out.println("BANKING MAIN MENU - Select one option");
+            System.out.println("1. Deposit Amount to an account");
+            System.out.println("2. Withdraw an Amount from an account");
+            System.out.println("3. Print Account Details");
+            System.out.println("4. Print All Account Details");
+            System.out.println("5. Print Max Loan Amount Details");
+            System.out.println("6. Exit the app");
 
-        }
+            userInput = reader.nextInt();
 
+            switch(userInput) {
+                case 1:
+                    if (account.Auth(account)) {
+                        System.out.print("Deposit: ");
+                        BankAccount.Deposit(reader.nextInt());
+                    }
+                    break;
+                case 2:
+                    if (account.Auth(account)) {
+                        System.out.print("Withdraw: ");
+                        BankAccount.Withdraw(reader.nextInt());
+                    }
+                    break;
+                case 3:
+                    if (account.Auth(account)) {
+                        System.out.println(account.toString());
+                    }
+                    break;
+                case 4:
+                    account.MaximumLoanAmount();
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+                    break;
+            }
+        } while (userInput != 6);
     }
 
     // Generates Random Welcome Message using Random Class
