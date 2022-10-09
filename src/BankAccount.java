@@ -47,20 +47,20 @@ public class BankAccount {
         AccountNumberGenerator();
 
         System.out.print("Enter your name: ");
-        name = reader.nextLine();
+        SetName(reader.nextLine());
 
         System.out.print("Enter your Pin (4 digit - no spaces): ");
-        pin = reader.nextInt();
+        SetPin(reader.nextInt());
 
         System.out.print("Enter your Account Balance: ");
-        balance = reader.nextInt();
+        SetBalance(reader.nextInt());
 
         System.out.println("Select your Account Type: ");
         System.out.println("1. CHEQUING");
         System.out.println("2. SAVINGS");
         System.out.println("3. RRSP");
         System.out.println("4. TFSA");
-        accountType = reader.nextInt();
+        SetAccountType(reader.nextInt());
 
         if (BankDriver.debug == true) {
             System.out.println(this.toString());
@@ -93,6 +93,30 @@ public class BankAccount {
     /**
      * Checks Accounts Maximum Loan Amount Depending on Account Type
      */
+    public String MaximumLoanAmountText() {
+
+        double loanAmount = 0;
+        DecimalFormat f = new DecimalFormat("##.00");
+        for (int i = 1; i < 4; i++) {
+            AccountType account = conversion(i);
+
+            if (account == conversion(1)) {
+                loanAmount = balance * 0.3;
+            } else if (account == conversion(2)) {
+                loanAmount = balance * 0.3;
+            }
+            else if (account == conversion(3)) {
+                loanAmount = balance * 0.4;
+            }
+            else if (account == conversion(4)) {
+                loanAmount = balance * 0.0;
+            }
+        }
+        return "------------------------------\n" +
+                "Max Loan Amount: $" + f.format(loanAmount) +
+                "\n------------------------------";
+    }
+
     public String MaximumLoanAmount() {
 
         double loanAmount = 0;
@@ -150,13 +174,13 @@ public class BankAccount {
     /** object to string */
     @Override
     public String toString() {
-        return "BankAccount{" +
-                "name='" + GetName() + '\'' +
-                ", pin=" + GetPin() +
-                ", balance=" + GetBalance() +
-                ", accountNumber=" + GetAccountNumber() +
-                ", accountType=" + conversion(GetAccountType()) +
-                ", MaximumLoan=" + MaximumLoanAmount() +
-                '}';
+        return "------------------------------" +
+                "\nAccount Number: " + GetAccountNumber() +
+                "\nAccount Holder Name: " + GetName() +
+                "\nAccount Balance: " + GetBalance() +
+                "\nAccount Type: " + conversion(GetAccountType()) +
+                "\nAccount Pin: " + GetPin() +
+                "\nMax Loan Amount: $" + MaximumLoanAmount() +
+                "\n------------------------------";
     }
 }

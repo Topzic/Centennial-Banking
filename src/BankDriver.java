@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class BankDriver {
 
     public static Boolean debug = false;
+    static List<BankAccount> accounts = new ArrayList<BankAccount>();
 
     public static void main(String[] args) {
 
@@ -12,10 +15,20 @@ public class BankDriver {
         System.out.println("------------------------------");
 
         BankAccount accountOne = new BankAccount();
+        BankAccount accountTwo = new BankAccount();
+
         accountOne.BankAccount();
-        System.out.println(accountOne.toString());
+        accounts.add(accountOne);
+
+//        accountTwo.BankAccount();
+//        accounts.add(accountTwo);
 
         MainMenu(accountOne);
+
+        if (debug == true) {
+            System.out.println(accountOne.toString());
+            //System.out.println(accountTwo.toString());
+        }
 
     }
 
@@ -55,13 +68,21 @@ public class BankDriver {
                     }
                     break;
                 case 4:
-                    account.MaximumLoanAmount();
+                    if (account.Auth(account)) {
+                        for (BankAccount acc : accounts) {
+                            System.out.println(acc.toString());
+                        }
+                    }
                     break;
                 case 5:
-
+                    if (account.Auth(account)) {
+                        System.out.println(account.MaximumLoanAmountText());
+                    }
                     break;
                 case 6:
                     break;
+                default:
+                    System.out.println("INVALID OPTION");
             }
         } while (userInput != 6);
     }
