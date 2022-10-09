@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class BankDriver {
@@ -13,17 +12,17 @@ public class BankDriver {
 
         // welcome message
         System.out.println("------------------------------");
-        System.out.println(Welcome());
+        System.out.println(welcome());
         System.out.println("------------------------------");
 
         // creation of account one
         BankAccount accountOne = new BankAccount();
-        accountOne.CreateBankAccount();
+        accountOne.createBankAccount();
         accounts.add(accountOne);
 
         // creation of account two
         BankAccount accountTwo = new BankAccount();
-        accountTwo.CreateBankAccount();
+        accountTwo.createBankAccount();
         accounts.add(accountTwo);
 
         // creation of account three
@@ -33,7 +32,7 @@ public class BankDriver {
         // creation of account using default constructor
         BankAccount accountFour = new BankAccount();
 
-        MainMenu(accountOne);
+        mainMenu(accountOne);
 
         if (debug == true) {
             System.out.println(accountOne.toString());
@@ -44,7 +43,7 @@ public class BankDriver {
     }
 
     /** User Interface */
-    public static void MainMenu(BankAccount account) {
+    public static void mainMenu(BankAccount account) {
 
         Scanner reader = new Scanner(System.in);
         int userInput;
@@ -70,48 +69,48 @@ public class BankDriver {
              */
             switch(userInput) {
                 case 1:
-                    account = account.Auth(accounts);
+                    account = account.auth(accounts);
                     if (account != null) {
                         System.out.print("Deposit: ");
-                        account.Deposit(reader.nextInt());
+                        account.deposit(reader.nextInt());
                     } else {
-                        MainMenu(temp);
+                        mainMenu(temp);
                     }
                     break;
                 case 2:
-                    account = account.Auth(accounts);
+                    account = account.auth(accounts);
                     if (account != null) {
                         System.out.print("Withdraw: ");
-                        account.Withdraw(reader.nextInt());
+                        account.withdraw(reader.nextInt());
                     } else {
-                        MainMenu(temp);
+                        mainMenu(temp);
                     }
                     break;
                 case 3:
-                    account = account.Auth(accounts);
+                    account = account.auth(accounts);
                     if (account != null) {
                         System.out.println(account.toString());
                     } else {
-                        MainMenu(temp);
+                        mainMenu(temp);
                     }
                     break;
                 case 4:
-                    account = account.Auth(accounts);
+                    account = account.auth(accounts);
                     if (account != null) {
                         System.out.println("-----All Account Details-----");
                         for (BankAccount acc : accounts) {
                             System.out.println(acc.toString());
                         }
                     } else {
-                        MainMenu(temp);
+                        mainMenu(temp);
                     }
                     break;
                 case 5:
-                    account = account.Auth(accounts);
+                    account = account.auth(accounts);
                     if (account != null) {
-                        System.out.println(account.MaximumLoanAmountText());
+                        System.out.println(account.maximumLoanAmountText());
                     } else {
-                        MainMenu(temp);
+                        mainMenu(temp);
                     }
                     break;
                 case 6:
@@ -123,7 +122,7 @@ public class BankDriver {
     }
 
     /** Generates Random Welcome Message using Random Class */
-    public static String Welcome() {
+    public static String welcome() {
 
         String[] messages = {
                 "Welcome to Centennial Bank.",

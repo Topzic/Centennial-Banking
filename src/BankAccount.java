@@ -16,40 +16,40 @@ public class BankAccount {
     public void SetName(String setName) { this.name = setName; }
 
     private int pin;
-    public int GetPin() { return pin; }
-    public void SetPin(int setPin ) { this.pin = setPin; }
+    public int getPin() { return pin; }
+    public void setPin(int setPin ) { this.pin = setPin; }
 
     private double balance;
-    public double GetBalance() { return balance; }
-    public void SetBalance(double setBalance) { this.balance = setBalance; }
+    public double getBalance() { return balance; }
+    public void setBalance(double setBalance) { this.balance = setBalance; }
 
     private long accountNumber;
-    public long GetAccountNumber() { return accountNumber; }
+    public long getAccountNumber() { return accountNumber; }
     public void SetAccountNumber(long number) { this.accountNumber = number; }
 
     private int accountType;
-    public int GetAccountType() { return accountType; }
-    public void SetAccountType(int accountType) { this.accountType = accountType; }
+    public int getAccountType() { return accountType; }
+    public void setAccountType(int accountType) { this.accountType = accountType; }
     // endregion
 
     /** Bank Account Number Generator */
-    public int AccountNumberGenerator() {
+    public int accountNumberGenerator() {
         accountNumber = ThreadLocalRandom.current().nextInt(1000, 2000);
         return (int) accountNumber;
     }
 
     /** BankAccount Constructor */
     public BankAccount(String Name, int Pin, double Balance, int Type) {
-        AccountNumberGenerator();
+        accountNumberGenerator();
         this.name = Name;
         this.pin = Pin;
         this.balance = Balance;
-        this.SetAccountType(Type);
+        this.setAccountType(Type);
     }
 
     /** Default BankAccount Constructor */
     public BankAccount() {
-        this.accountNumber = AccountNumberGenerator();
+        this.accountNumber = accountNumberGenerator();
         this.name = "";
         this.pin = 0000;
         this.balance = 0.00;
@@ -57,29 +57,29 @@ public class BankAccount {
     }
 
     /** Bank Account Creation */
-    public void CreateBankAccount() {
+    public void createBankAccount() {
 
         Scanner reader = new Scanner(System.in);
 
         System.out.println("-----Account Creation-----");
 
-        AccountNumberGenerator();
+        accountNumberGenerator();
 
         System.out.print("Enter your name: ");
         this.SetName(reader.nextLine());
 
         System.out.print("Enter your Pin (4 digit - no spaces): ");
-        this.SetPin(reader.nextInt());
+        this.setPin(reader.nextInt());
 
         System.out.print("Enter your Account Balance: ");
-        this.SetBalance(reader.nextInt());
+        this.setBalance(reader.nextInt());
 
         System.out.println("Select your Account Type: ");
         System.out.println("1. CHEQUING");
         System.out.println("2. SAVINGS");
         System.out.println("3. RRSP");
         System.out.println("4. TFSA");
-        this.SetAccountType(reader.nextInt());
+        this.setAccountType(reader.nextInt());
 
         if (BankDriver.debug == true) {
             System.out.println(this.toString());
@@ -112,7 +112,7 @@ public class BankAccount {
     /**
      * Checks Accounts Maximum Loan Amount Depending on Account Type
      */
-    public String MaximumLoanAmountText() {
+    public String maximumLoanAmountText() {
 
         double loanAmount = 0;
         DecimalFormat f = new DecimalFormat("##.00");
@@ -139,7 +139,7 @@ public class BankAccount {
     /**
      * Checks Accounts Maximum Loan Amount Depending on Account Type
      */
-    public String MaximumLoanAmount() {
+    public String maximumLoanAmount() {
 
         double loanAmount = 0.00;
         DecimalFormat f = new DecimalFormat("##.00");
@@ -160,14 +160,14 @@ public class BankAccount {
     }
 
     /** Account Authentication */
-    public BankAccount Auth(List<BankAccount> accounts) {
+    public BankAccount auth(List<BankAccount> accounts) {
 
         Scanner reader = new Scanner(System.in);
         System.out.print("Enter your Pin (4 digit - no spaces): ");
         int pin = reader.nextInt();
 
         for (BankAccount acc : accounts) {
-            if (pin == acc.GetPin()) {
+            if (pin == acc.getPin()) {
                 return acc;
             } else {
 
@@ -178,13 +178,13 @@ public class BankAccount {
     }
 
     /** Deposit Money */
-    public void Deposit(int amount) {
+    public void deposit(int amount) {
         System.out.println("-----Account Deposit-----");
         this.balance += amount;
     }
 
     /** Withdraw Money */
-    public void Withdraw(double amount) {
+    public void withdraw(double amount) {
         System.out.println("-----Account Withdraw-----");
 
         if (this.balance > amount) {
@@ -198,12 +198,12 @@ public class BankAccount {
     @Override
     public String toString() {
         return "------------------------------\n" +
-                "Account Number: " + GetAccountNumber() +
+                "Account Number: " + getAccountNumber() +
                 "\nAccount Holder Name: " + GetName() +
-                "\nAccount Balance: " + GetBalance() +
-                "\nAccount Type: " + conversion(GetAccountType()) +
-                "\nAccount Pin: " + GetPin() +
-                "\nMax Loan Amount: $" + MaximumLoanAmount() +
+                "\nAccount Balance: " + getBalance() +
+                "\nAccount Type: " + conversion(getAccountType()) +
+                "\nAccount Pin: " + getPin() +
+                "\nMax Loan Amount: $" + maximumLoanAmount() +
                 "\n------------------------------\n";
     }
 }
