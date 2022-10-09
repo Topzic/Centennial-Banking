@@ -68,8 +68,10 @@ public class BankAccount {
         System.out.print("Enter your name: ");
         this.SetName(reader.nextLine());
 
-        System.out.print("Enter your Pin (4 digit - no spaces): ");
-        this.setPin(reader.nextInt());
+        do {
+            System.out.print("Enter your Pin (4 digit - no spaces): ");
+            this.setPin(reader.nextInt());
+        } while (String.valueOf(this.pin).length() != 4);
 
         System.out.print("Enter your Account Balance: ");
         this.setBalance(reader.nextInt());
