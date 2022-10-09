@@ -1,6 +1,6 @@
 public enum AccountType {
-    CHEQUEING,
+    CHEQUING,
     SAVING,
-    RRSP,
-    TFSA
+    TFSA,
+    RRSP
 }

@@ -1,27 +1,31 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class BankDriver {
 
+    // Debug
     public static Boolean debug = false;
+
+    // Bank Account List
     static List<BankAccount> accounts = new ArrayList<BankAccount>();
 
     public static void main(String[] args) {
 
+        // welcome message
         System.out.println("------------------------------");
         System.out.println(Welcome());
         System.out.println("------------------------------");
 
+        // creation of account one
         BankAccount accountOne = new BankAccount();
-        BankAccount accountTwo = new BankAccount();
-
-        accountOne.BankAccount();
         accounts.add(accountOne);
 
-//        accountTwo.BankAccount();
-//        accounts.add(accountTwo);
+        // creation of account two
+        BankAccount accountTwo = new BankAccount();
+        accounts.add(accountTwo);
+
+        // creation of account threer
+        BankAccount accountThree = new BankAccount("Jeff Thompson", 7777, 7500.00, 3);
+        accounts.add(accountThree);
 
         MainMenu(accountOne);
 
@@ -32,6 +36,7 @@ public class BankDriver {
 
     }
 
+    /** User Interface */
     public static void MainMenu(BankAccount account) {
 
         Scanner reader = new Scanner(System.in);
@@ -53,13 +58,13 @@ public class BankDriver {
                 case 1:
                     if (account.Auth(account)) {
                         System.out.print("Deposit: ");
-                        BankAccount.Deposit(reader.nextInt());
+                        account.Deposit(reader.nextInt());
                     }
                     break;
                 case 2:
                     if (account.Auth(account)) {
                         System.out.print("Withdraw: ");
-                        BankAccount.Withdraw(reader.nextInt());
+                        account.Withdraw(reader.nextInt());
                     }
                     break;
                 case 3:
@@ -69,6 +74,7 @@ public class BankDriver {
                     break;
                 case 4:
                     if (account.Auth(account)) {
+                        System.out.println("-----All Account Details-----");
                         for (BankAccount acc : accounts) {
                             System.out.println(acc.toString());
                         }
@@ -87,7 +93,7 @@ public class BankDriver {
         } while (userInput != 6);
     }
 
-    // Generates Random Welcome Message using Random Class
+    /** Generates Random Welcome Message using Random Class */
     public static String Welcome() {
 
         String[] messages = {
