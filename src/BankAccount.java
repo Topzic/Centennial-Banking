@@ -3,35 +3,70 @@
     Date:       10/08/2022
  */
 
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BankAccount {
 
     // region Getters and Setters
-    private String name;
-    public String GetName() { return name; }
+    static String name;
+    public static String GetName() { return name; }
     public void SetName(String setName) { this.name = setName; }
 
-    int pin;
+    public static int pin;
     public int GetPin() { return pin; }
     public void SetPin(int setPin ) { this.pin = setPin; }
 
-    double balance;
-    public double GetBalance() { return balance; }
+    static double balance;
+    public static double GetBalance() { return balance; }
     public void SetBalance(double setBalance) { this.balance = setBalance; }
 
-    long accountNumber;
-    public long GetAccountNumber() { return accountNumber; }
+    static long accountNumber;
+    public static long GetAccountNumber() { return accountNumber; }
     public void SetAccountNumber(long number) { this.accountNumber = number; }
+
+    static int accountType;
+    public static int GetAccountType() { return accountType; }
+    public void SetAccountType(int accountType) { this.accountType = accountType; }
     // endregion
 
-    // Bank Account Number Generator
+    /** Bank Account Number Generator */
     public int AccountNumberGenerator() {
         accountNumber = ThreadLocalRandom.current().nextInt(1000, 2000);
         return (int) accountNumber;
     }
 
-    // Checks and Returns Account Type
+    /** Bank Account Creation */
+    public void BankAccount() {
+
+        Scanner reader = new Scanner(System.in);
+
+        System.out.println("-----Account Creation-----");
+
+        AccountNumberGenerator();
+
+        System.out.print("Enter your name: ");
+        name = reader.nextLine();
+
+        System.out.print("Enter your Pin (4 digit - no spaces): ");
+        pin = reader.nextInt();
+
+        System.out.print("Enter your Account Balance: ");
+        balance = reader.nextInt();
+
+        System.out.println("Select your Account Type: ");
+        System.out.println("1. CHEQUING");
+        System.out.println("2. SAVINGS");
+        System.out.println("3. RRSP");
+        System.out.println("4. TFSA");
+        accountType = reader.nextInt();
+
+        if (BankDriver.debug == true) {
+            System.out.println(this.toString());
+        }
+    }
+
+    /** Checks and Returns Account Type */
     public static AccountType conversion(int reference) {
         AccountType type;
         switch (reference) {
@@ -54,7 +89,7 @@ public class BankAccount {
          return type;
     }
 
-    // Checks Accounts Maximum Loan Amount Depending on Account Type
+    /** Checks Accounts Maximum Loan Amount Depending on Account Type */
     public double MaximumLoanAmount() {
 
         double loanAmount = 0;
@@ -77,23 +112,47 @@ public class BankAccount {
         return loanAmount;
     }
 
-    // Deposit Money
-    public void Deposit(double amount) {
+    /** Account Authentication */
+    public boolean Auth(BankAccount account) {
+
+        Scanner reader = new Scanner(System.in);
+        System.out.print("Please enter pin: ");
+
+        if (reader.nextInt() == account.GetPin()) {
+            return true;
+        } else {
+            System.out.println("Authentication Error.");
+            return false;
+        }
+
+    }
+
+
+    /** Deposit Money */
+    public static void Deposit(int amount) {
+        double oldBalance = GetBalance();
+        System.out.println("Old Balance: " + oldBalance);
         balance += amount;
+        System.out.println("New Balance: " + BankAccount.balance);
     }
 
-    // Withdraw Money
-    public void Withdraw(double amount) {
+    /** Withdraw Money */
+    public static void Withdraw(double amount) {
+        double oldBalance = GetBalance();
+        System.out.println("Old Balance: " + oldBalance);
         balance -= amount;
+        System.out.println("New Balance: " + BankAccount.balance);
     }
 
-    @Override // object to string
+    /** object to string */
+    @Override
     public String toString() {
         return "BankAccount{" +
                 "name='" + GetName() + '\'' +
                 ", pin=" + GetPin() +
                 ", balance=" + GetBalance() +
                 ", accountNumber=" + GetAccountNumber() +
+                ", accountType=" + conversion(GetAccountType()) +
                 '}';
     }
 }
