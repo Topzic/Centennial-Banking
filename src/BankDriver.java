@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class BankDriver {
@@ -6,7 +7,7 @@ public class BankDriver {
     public static Boolean debug = false;
 
     // Bank Account List
-    static List<BankAccount> accounts = new ArrayList<BankAccount>();
+    public static List<BankAccount> accounts = new ArrayList<BankAccount>();
 
     public static void main(String[] args) {
 
@@ -17,21 +18,27 @@ public class BankDriver {
 
         // creation of account one
         BankAccount accountOne = new BankAccount();
+        accountOne.CreateBankAccount();
         accounts.add(accountOne);
 
         // creation of account two
         BankAccount accountTwo = new BankAccount();
+        accountTwo.CreateBankAccount();
         accounts.add(accountTwo);
 
-        // creation of account threer
+        // creation of account three
         BankAccount accountThree = new BankAccount("Jeff Thompson", 7777, 7500.00, 3);
         accounts.add(accountThree);
+
+        // creation of account using default constructor
+        BankAccount accountFour = new BankAccount();
 
         MainMenu(accountOne);
 
         if (debug == true) {
             System.out.println(accountOne.toString());
-            //System.out.println(accountTwo.toString());
+            System.out.println(accountTwo.toString());
+            System.out.println(accountThree.toString());
         }
 
     }
@@ -41,6 +48,8 @@ public class BankDriver {
 
         Scanner reader = new Scanner(System.in);
         int userInput;
+
+        BankAccount temp = account;
 
         do {
 
@@ -54,35 +63,55 @@ public class BankDriver {
 
             userInput = reader.nextInt();
 
+            /**
+             * User input redirects to selected menu location, then User enters pin corresponding
+             * to the account they want to access. If pin is incorrect it will return to main menu.
+             * by calling MainMenu using a temp user, so it does not crash from having null user.
+             */
             switch(userInput) {
                 case 1:
-                    if (account.Auth(account)) {
+                    account = account.Auth(accounts);
+                    if (account != null) {
                         System.out.print("Deposit: ");
                         account.Deposit(reader.nextInt());
+                    } else {
+                        MainMenu(temp);
                     }
                     break;
                 case 2:
-                    if (account.Auth(account)) {
+                    account = account.Auth(accounts);
+                    if (account != null) {
                         System.out.print("Withdraw: ");
                         account.Withdraw(reader.nextInt());
+                    } else {
+                        MainMenu(temp);
                     }
                     break;
                 case 3:
-                    if (account.Auth(account)) {
+                    account = account.Auth(accounts);
+                    if (account != null) {
                         System.out.println(account.toString());
+                    } else {
+                        MainMenu(temp);
                     }
                     break;
                 case 4:
-                    if (account.Auth(account)) {
+                    account = account.Auth(accounts);
+                    if (account != null) {
                         System.out.println("-----All Account Details-----");
                         for (BankAccount acc : accounts) {
                             System.out.println(acc.toString());
                         }
+                    } else {
+                        MainMenu(temp);
                     }
                     break;
                 case 5:
-                    if (account.Auth(account)) {
+                    account = account.Auth(accounts);
+                    if (account != null) {
                         System.out.println(account.MaximumLoanAmountText());
+                    } else {
+                        MainMenu(temp);
                     }
                     break;
                 case 6:

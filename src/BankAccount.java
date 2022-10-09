@@ -1,32 +1,33 @@
-/*
+/**
     Author:     Ian Cunningham
     Date:       10/08/2022
  */
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BankAccount {
 
     // region Getters and Setters
-    public String name;
+    private String name;
     public String GetName() { return name; }
     public void SetName(String setName) { this.name = setName; }
 
-    public int pin;
+    private int pin;
     public int GetPin() { return pin; }
     public void SetPin(int setPin ) { this.pin = setPin; }
 
-    double balance;
+    private double balance;
     public double GetBalance() { return balance; }
     public void SetBalance(double setBalance) { this.balance = setBalance; }
 
-    long accountNumber;
+    private long accountNumber;
     public long GetAccountNumber() { return accountNumber; }
     public void SetAccountNumber(long number) { this.accountNumber = number; }
 
-    public int accountType;
+    private int accountType;
     public int GetAccountType() { return accountType; }
     public void SetAccountType(int accountType) { this.accountType = accountType; }
     // endregion
@@ -37,6 +38,7 @@ public class BankAccount {
         return (int) accountNumber;
     }
 
+    /** BankAccount Constructor */
     public BankAccount(String Name, int Pin, double Balance, int Type) {
         AccountNumberGenerator();
         this.name = Name;
@@ -45,8 +47,13 @@ public class BankAccount {
         this.SetAccountType(Type);
     }
 
+    /** Default BankAccount Constructor */
     public BankAccount() {
-        this.CreateBankAccount();
+        this.accountNumber = AccountNumberGenerator();
+        this.name = "";
+        this.pin = 0000;
+        this.balance = 0.00;
+        this.accountType = 1;
     }
 
     /** Bank Account Creation */
@@ -129,6 +136,9 @@ public class BankAccount {
                 "\n------------------------------";
     }
 
+    /**
+     * Checks Accounts Maximum Loan Amount Depending on Account Type
+     */
     public String MaximumLoanAmount() {
 
         double loanAmount = 0.00;
@@ -150,18 +160,21 @@ public class BankAccount {
     }
 
     /** Account Authentication */
-    public boolean Auth(BankAccount account) {
+    public BankAccount Auth(List<BankAccount> accounts) {
 
         Scanner reader = new Scanner(System.in);
         System.out.print("Enter your Pin (4 digit - no spaces): ");
+        int pin = reader.nextInt();
 
-        if (reader.nextInt() == account.GetPin()) {
-            return true;
-        } else {
-            System.out.println("Authentication Error.");
-            return false;
+        for (BankAccount acc : accounts) {
+            if (pin == acc.GetPin()) {
+                return acc;
+            } else {
+
+            }
         }
-
+        System.out.println("Authentication Error.");
+        return null;
     }
 
     /** Deposit Money */
